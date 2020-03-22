@@ -5,6 +5,7 @@ describe "Items API" do
     before :each do 
       @merchant_1 = create(:merchant)
       @merchant_2 = create(:merchant)
+
       @item_1 = create(:item, merchant: @merchant_1)
       @item_2 = create(:item, merchant: @merchant_1)
       @item_3 = create(:item, merchant: @merchant_2)
