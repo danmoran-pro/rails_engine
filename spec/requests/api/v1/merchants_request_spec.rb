@@ -22,6 +22,7 @@ describe "Merchant API" do
       
       expect(response).to be_successful
       merchant = JSON.parse(response.body)["data"]
+      
       expect(merchant['attributes']['id']).to eq(@merchant_1.id)
       expect(merchant['attributes']['id']).not_to eq(@merchant_2.id)
     end
