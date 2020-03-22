@@ -27,11 +27,26 @@ describe "Items API" do
       
       expect(response).to be_successful
       item = JSON.parse(response.body)["data"]
-      
       expect(item['attributes']['id']).to eq(@item_5.id)
       expect(item['attributes']['id']).not_to eq(@item_1.id)
       expect(item['attributes']['merchant_id']).to eq(@merchant_2.id)
       expect(item['attributes']['merchant_id']).to_not eq(@merchant_1.id)
+    end
+
+    it "can create a item" do
+      item_params = {name: "remote", description: "Universal Remote", unit_price: "8.00", merchant_id: @merchant_1.id}
+     
+      post "/api/v1/items", params: {item: item_params}
+    
+      item_obj = Item.last
+
+      item = JSON.parse(response.body)["data"]
+  
+      expect(response).to be_successful
+      expect(item['attributes']['name']).to eq(item_params[:name])
+      expect(item['attributes']['description']).to eq(item_params[:description])
+      expect(item['attributes']['unit_price']).to eq(item_params[:unit_price])
+      expect(item['attributes']['merchant_id']).to eq(item_params[:merchant_id])
     end
   end 
 end 
