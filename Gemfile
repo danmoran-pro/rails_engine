@@ -41,6 +41,7 @@ gem 'figaro'
   gem 'pry'
   gem 'factory_bot_rails'
   gem 'faker'
+  gem 'fast_jsonapi'
 end
 
 group :development do

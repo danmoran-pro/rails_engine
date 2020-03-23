@@ -35,8 +35,15 @@ desc "import csv data"
     file = "./db/rails_data/items.csv"
     Item.destroy_all
     CSV.foreach(file, headers: true) do |row|
-      item_hash = row.to_hash
-      item = Item.create(item_hash)
+      Item.create!({
+        id: row['id'],
+        name: row['name'],
+        description: row['description'],
+        unit_price: row['unit_price'].to_f/100,
+        merchant_id: row['merchant_id'],
+        created_at: row['created_at'],
+        updated_at: row['updated_at']
+      })
     end
     puts "created #{Item.count} items!"
   end 
@@ -44,9 +51,17 @@ desc "import csv data"
   task :import => [:environment] do
     file = "./db/rails_data/invoice_items.csv"
     InvoiceItem.destroy_all
+
     CSV.foreach(file, headers: true) do |row|
-      invoice_items_hash = row.to_hash
-      invoice_items = InvoiceItem.create(invoice_items_hash)
+      InvoiceItem.create!({
+        id: row['id'],
+        item_id: row['item_id'],
+        invoice_id: row['invoice_id'],
+        unit_price: row['unit_price'].to_f/100,
+        quantity: row['quantity'],
+        created_at: row['created_at'],
+        updated_at: row['updated_at'],
+      })
     end
     puts "created #{InvoiceItem.count} invoice items!"
   end 
