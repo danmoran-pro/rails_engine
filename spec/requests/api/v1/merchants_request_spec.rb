@@ -21,10 +21,37 @@ describe "Merchant API" do
       get "/api/v1/merchants/#{@merchant_1.id}"
       
       expect(response).to be_successful
+
       merchant = JSON.parse(response.body)["data"]
-      
-      expect(merchant['attributes']['id']).to eq(@merchant_1.id)
-      expect(merchant['attributes']['id']).not_to eq(@merchant_2.id)
+
+      expect(merchant['id']).to eq(@merchant_1.id.to_s)
+      expect(merchant['id']).not_to eq(@merchant_2.id.to_s)
+    end
+    it "can create a merchant" do
+      merchant_params = {name: "Remote store"}
+     
+      post "/api/v1/merchants", params: {merchant: merchant_params}
+    
+      merchant_obj = Merchant.last
+
+      merchant = JSON.parse(response.body)["data"]
+  
+      expect(response).to be_successful
+      expect(merchant['attributes']['name']).to eq(merchant_params[:name])
+    end
+    it "can update a merchant" do
+      @name = @merchant_1.name
+      merchant_params = {name: "Comb Store"}
+
+      put "/api/v1/merchants/#{@merchant_1.id}", params: {merchant: merchant_params}
+    
+      merchant_obj = Merchant.last
+
+      merchant = JSON.parse(response.body)["data"]
+  
+      expect(response).to be_successful
+      expect(merchant['attributes']['name']).to eq(merchant_params[:name])
+      expect(merchant['attributes']['name']).to_not eq(@name)
     end
   end 
 end 

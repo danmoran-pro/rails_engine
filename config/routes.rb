@@ -3,9 +3,9 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :customers, only: [:index, :show]
       
-      resources :merchants, only: [:index, :show]
+      resources :merchants, only: [:index, :show, :create, :update]
      
-      resources :items, only: [:index, :show, :create]
+      resources :items, only: [:index, :show, :create, :update]
 
       resources :invoices, only: [:index, :show]
       
