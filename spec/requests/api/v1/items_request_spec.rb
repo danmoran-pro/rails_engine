@@ -11,6 +11,7 @@ describe "Items API" do
       @item_3 = create(:item, merchant: @merchant_2)
       @item_5 = create(:item, merchant_id: @merchant_2.id)
     end 
+
     it "sends a list of items" do
       
       get '/api/v1/items'
@@ -21,6 +22,7 @@ describe "Items API" do
       
       expect(items.count).to eql(4)
     end
+
     it "sends a unique item" do
       
       get "/api/v1/items/#{@item_5.id}"
@@ -48,6 +50,7 @@ describe "Items API" do
       expect(item['attributes']['unit_price']).to eq(item_params[:unit_price])
       expect(item['attributes']['merchant_id']).to eq(item_params[:merchant_id])
     end
+
     it "can update a item" do
       @name = @item_1.name
       @description = @item_1.description
@@ -68,6 +71,21 @@ describe "Items API" do
       expect(item['attributes']['description']).to_not eq(@description)
       expect(item['attributes']['unit_price']).to eq(item_params[:unit_price].to_s)
       expect(item['attributes']['unit_price']).to_not eq(@unit_price)
+    end
+
+    it "can delete a Item" do
+
+      expect(Item.count).to eq(4)  
+      
+      delete "/api/v1/items/#{@item_1.id}"
+      
+      get '/api/v1/items' 
+
+      items = JSON.parse(response.body)["data"]
+      
+      expect(response).to be_successful
+      expect(Item.count).to eq(3)  
+      expect{Item.find(@item_1.id)}.to raise_error(ActiveRecord::RecordNotFound)
     end
   end 
 end 
