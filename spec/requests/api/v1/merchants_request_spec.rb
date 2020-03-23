@@ -89,5 +89,17 @@ describe "Merchant API" do
       expect(items.first['attributes']['merchant_id']).to_not be eql(@merchant_2.id)
       expect(items.last['attributes']['merchant_id']).to_not be eql(@merchant_2.id)
     end
+
+    it 'can find a merchant by name' do
+
+      get "/api/v1/merchants/find?name=#{@merchant_1.name}"
+
+      merchant = JSON.parse(response.body)['data']
+
+      expect(response).to be_successful
+
+      expect(merchant['attributes']["name"]).to eq(@merchant_1.name)
+      expect(merchant['attributes']["name"]).to_not eq(@merchant_2.name)
+    end
   end 
 end 
