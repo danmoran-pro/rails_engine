@@ -48,5 +48,26 @@ describe "Items API" do
       expect(item['attributes']['unit_price']).to eq(item_params[:unit_price])
       expect(item['attributes']['merchant_id']).to eq(item_params[:merchant_id])
     end
+    it "can update a item" do
+      @name = @item_1.name
+      @description = @item_1.description
+      @unit_price = @item_1.unit_price
+
+      item_params = {name: "Razor", description: "New discription", unit_price: 10.00 }
+
+      put "/api/v1/items/#{@item_1.id}", params: {item: item_params}
+    
+      item_obj = Item.last
+
+      item = JSON.parse(response.body)["data"]
+  
+      expect(response).to be_successful
+      expect(item['attributes']['name']).to eq(item_params[:name])
+      expect(item['attributes']['name']).to_not eq(@name)
+      expect(item['attributes']['description']).to eq(item_params[:description])
+      expect(item['attributes']['description']).to_not eq(@description)
+      expect(item['attributes']['unit_price']).to eq(item_params[:unit_price].to_s)
+      expect(item['attributes']['unit_price']).to_not eq(@unit_price)
+    end
   end 
 end 
