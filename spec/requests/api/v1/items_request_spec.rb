@@ -99,5 +99,17 @@ describe "Items API" do
       expect(merchant['id']).to eq(@merchant_1.id.to_s)
       expect(merchant['id']).to_not eq(@merchant_2.id.to_s)
     end
+
+    it 'can find a item by name' do
+
+      get "/api/v1/items/find?name=#{@item_1.name}"
+
+      item = JSON.parse(response.body)['data']
+
+      expect(response).to be_successful
+
+      expect(item['attributes']["name"]).to eq(@item_1.name)
+      expect(item['attributes']["name"]).to_not eq(@item_2.name)
+    end
   end 
 end 

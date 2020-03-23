@@ -101,5 +101,18 @@ describe "Merchant API" do
       expect(merchant['attributes']["name"]).to eq(@merchant_1.name)
       expect(merchant['attributes']["name"]).to_not eq(@merchant_2.name)
     end
+    # it 'can find a merchant by partial name' do
+    #   @merch_1 = create(:merchant, name: "Turing")
+    #   @merch_2 = create(:merchant, name: "Ring")
+
+    #   get "/api/v1/merchants/find?name=ring"
+
+    #   merchant = JSON.parse(response.body)['data']
+
+    #   expect(response).to be_successful
+      
+    #   expect(merchant['attributes']["name"]).to eq(@merch_1.name)
+    #   expect(merchant['attributes']["name"]).to eq(@merch_2.name)
+    # end
   end 
 end 
