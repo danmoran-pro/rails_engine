@@ -4,9 +4,9 @@ class ItemSerializer
 
   attributes :unit_price do |obj|
     if obj.unit_price.to_f > 99.99 
-      obj.unit_price.fdiv(100.0).to_s
+      obj.unit_price.fdiv(100.0).round(2).to_s
     else obj.unit_price.to_f > 9.99 
-      obj.unit_price.fdiv(1.0).round(1).to_s
+      obj.unit_price.fdiv(1.0).round(2).to_s
     end
   end 
 

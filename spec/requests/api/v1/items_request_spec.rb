@@ -34,7 +34,7 @@ describe "Items API" do
     end
 
     it "can create a item" do
-      item_params = {name: "remote", description: "Universal Remote", unit_price: "8.00", merchant_id: @merchant_1.id}
+      item_params = {name: "remote", description: "Universal Remote", unit_price: "8.01", merchant_id: @merchant_1.id}
      
       post "/api/v1/items", params: {item: item_params}
     
