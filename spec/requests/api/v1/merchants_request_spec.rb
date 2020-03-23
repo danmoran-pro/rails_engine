@@ -87,7 +87,7 @@ describe "Merchant API" do
 
       expect(items.count).to eql(2)
       expect(items.first['attributes']['merchant_id']).to_not be eql(@merchant_2.id)
-  end
-
+      expect(items.last['attributes']['merchant_id']).to_not be eql(@merchant_2.id)
+    end
   end 
 end 

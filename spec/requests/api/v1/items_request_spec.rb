@@ -87,5 +87,17 @@ describe "Items API" do
       expect(Item.count).to eq(3)  
       expect{Item.find(@item_1.id)}.to raise_error(ActiveRecord::RecordNotFound)
     end
+
+    it 'can find the specific merchant for that item' do
+
+      get "/api/v1/items/#{@item_1.id}/merchant"
+
+      merchant = JSON.parse(response.body)['data']
+
+      expect(response).to be_successful
+
+      expect(merchant['id']).to eq(@merchant_1.id.to_s)
+      expect(merchant['id']).to_not eq(@merchant_2.id.to_s)
+    end
   end 
 end 
