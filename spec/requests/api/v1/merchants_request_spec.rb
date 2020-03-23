@@ -6,6 +6,10 @@ describe "Merchant API" do
       create_list(:merchant, 3)
       @merchant_1 = create(:merchant)
       @merchant_2 = create(:merchant)
+
+      @item_1 = create(:item, merchant: @merchant_1)
+      @item_2 = create(:item, merchant: @merchant_1)
+      @item_3 = create(:item, merchant: @merchant_2)
     end 
 
     it "sends a list of merchants" do
@@ -72,5 +76,18 @@ describe "Merchant API" do
       expect(Merchant.count).to eq(4)  
       expect{Item.find(@merchant_1.id)}.to raise_error(ActiveRecord::RecordNotFound)
     end
+
+    it 'can find all items from a specific merchant' do
+
+      get "/api/v1/merchants/#{@merchant_1.id}/items"
+
+      items = JSON.parse(response.body)['data']
+
+      expect(response).to be_successful
+
+      expect(items.count).to eql(2)
+      expect(items.first['attributes']['merchant_id']).to_not be eql(@merchant_2.id)
+  end
+
   end 
 end 
